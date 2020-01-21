@@ -1,0 +1,10 @@
+includes:
+    - vendor/hanaboso/php-check-utils/phpstan.neon
+
+parameters:
+    symfony:
+        container_xml_path: %rootDir%/../../../var/cache/test/Hanaboso_RestBundleTests_app_KernelTestDebugContainer.xml
+    ignoreErrors:
+        -
+            message: '#Call to method Symfony\\Component\\DependencyInjection\\ContainerBuilder::has\(\) with mixed will always evaluate to true#'
+            path: src/DependencyInjection/CompilerPass/RestCompilerPass.php
