@@ -1,0 +1,15 @@
+parameters:
+    kernel.secret: ''
+
+services:
+    _defaults:
+        public: true
+
+    subscriber:
+        alias: rest.subscriber
+
+    json:
+        alias: rest.decoder.json
+
+    xml:
+        alias: rest.decoder.xml

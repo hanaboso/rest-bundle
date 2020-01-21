@@ -1,0 +1,25 @@
+{
+    "name": "hanaboso/rest-bundle",
+    "license": "proprietary",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Hanaboso\\RestBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hanaboso\\RestBundleTests\\": "tests"
+        }
+    },
+    "require": {
+        "php": "^7.4",
+        "hanaboso/utils": "^1.0",
+        "symfony/dependency-injection": "^5.0",
+        "symfony/serializer": "^5.0"
+    },
+    "require-dev": {
+        "hanaboso/php-check-utils": "^1.1",
+        "symfony/yaml": "^5.0"
+    }
+}
