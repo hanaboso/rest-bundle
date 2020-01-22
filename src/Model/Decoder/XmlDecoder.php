@@ -2,7 +2,7 @@
 
 namespace Hanaboso\RestBundle\Model\Decoder;
 
-use Hanaboso\RestBundle\Exception\DecoderException;
+use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Throwable;
 
@@ -33,14 +33,14 @@ final class XmlDecoder implements DecoderInterface
      * @param string $content
      *
      * @return mixed[]
-     * @throws DecoderException
+     * @throws XmlDecoderException
      */
     public function decode(string $content): array
     {
         try {
             return $this->encoder->decode($content, XmlEncoder::FORMAT);
         } catch (Throwable $throwable) {
-            throw new DecoderException($throwable->getMessage(), DecoderException::ERROR, $throwable);
+            throw new XmlDecoderException($throwable->getMessage(), XmlDecoderException::ERROR, $throwable);
         }
     }
 

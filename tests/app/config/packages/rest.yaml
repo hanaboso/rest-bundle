@@ -1,5 +1,6 @@
 rest:
     routes:
-        '^/': ['json']
+        '^/': ['json', 'xml']
     decoders:
         json: 'rest.decoder.json'
+        xml: 'rest.decoder.xml'

@@ -2,7 +2,7 @@
 
 namespace Hanaboso\RestBundle\Model\Decoder;
 
-use Hanaboso\RestBundle\Exception\DecoderException;
+use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 
 /**
  * Interface DecoderInterface
@@ -16,7 +16,7 @@ interface DecoderInterface
      * @param string $content
      *
      * @return mixed[]
-     * @throws DecoderException
+     * @throws DecoderExceptionAbstract
      */
     public function decode(string $content): array;
 

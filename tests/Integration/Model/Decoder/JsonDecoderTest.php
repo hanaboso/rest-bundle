@@ -3,7 +3,7 @@
 namespace Hanaboso\RestBundleTests\Integration\Model\Decoder;
 
 use Exception;
-use Hanaboso\RestBundle\Exception\DecoderException;
+use Hanaboso\RestBundle\Exception\JsonDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\JsonDecoder;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
 
@@ -39,7 +39,7 @@ final class JsonDecoderTest extends KernelTestCaseAbstract
      */
     public function testDecodeException(): void
     {
-        self::assertException(DecoderException::class, DecoderException::ERROR, 'Syntax error');
+        self::assertException(JsonDecoderException::class, JsonDecoderException::ERROR, 'Syntax error');
 
         self::assertEquals([], $this->decoder->decode('Unknown'));
     }

@@ -3,6 +3,7 @@
 namespace Hanaboso\RestBundle\Model;
 
 use Hanaboso\RestBundle\Exception\DecoderException;
+use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -59,16 +60,25 @@ final class EventSubscriber implements EventSubscriberInterface
 
         foreach ($this->config as $route => $decoders) {
             if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
+                $exceptions = [];
+
                 foreach ($decoders as $decoder) {
                     try {
                         $request->request = new ParameterBag($this->decoders[$decoder]->decode($request->getContent()));
 
                         break;
-                    } catch (DecoderException $exception) {
-                        if ($this->strict) {
-                            throw $exception;
-                        }
+                    } catch (DecoderExceptionAbstract $exception) {
+                        $exceptions[] = $exception;
                     }
+                }
+
+                if ($this->strict && count($exceptions) !== 0 && count($exceptions) === count($decoders)) {
+                    throw new DecoderException(
+                        'Cannot decode given content!',
+                        DecoderException::ERROR,
+                        NULL,
+                        $exceptions
+                    );
                 }
             }
 

@@ -4,7 +4,7 @@ namespace Hanaboso\RestBundleTests\Integration\Model\Decoder;
 
 use Exception;
 use Hanaboso\PhpCheckUtils\PhpUnit\Traits\CustomAssertTrait;
-use Hanaboso\RestBundle\Exception\DecoderException;
+use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\XmlDecoder;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
  *
  * @package Hanaboso\RestBundleTests\Integration\Model\Decoder
  *
- * @covers \Hanaboso\RestBundle\Model\Decoder\XmlDecoder
+ * @covers  \Hanaboso\RestBundle\Model\Decoder\XmlDecoder
  */
 final class XmlDecoderTest extends KernelTestCaseAbstract
 {
@@ -55,7 +55,7 @@ final class XmlDecoderTest extends KernelTestCaseAbstract
      */
     public function testDecodeException(): void
     {
-        self::assertException(DecoderException::class, DecoderException::ERROR, "Start tag expected, '<");
+        self::assertException(XmlDecoderException::class, XmlDecoderException::ERROR, "Start tag expected, '<");
 
         self::assertEquals([], $this->decoder->decode('Unknown'));
     }
