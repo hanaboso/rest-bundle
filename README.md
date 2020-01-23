@@ -19,4 +19,10 @@ rest:
     decoders:
         json: 'rest.decoder.json'
         xml: 'rest.decoder.xml'
+    cors:
+        '^/':
+            origin: ['*']
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+            headers: ['Content-Type']
+            credentials: TRUE
 ```

@@ -11,8 +11,11 @@ use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Hanaboso\RestBundle\Model\EventSubscriber;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -42,8 +45,23 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
         $requestEvent = $this->prepareRequestEvent();
 
         $this->subscriber->onKernelRequest($requestEvent);
+        /** @var Response $response */
+        $response = $requestEvent->getResponse();
 
         self::assertEquals(['one' => 'One'], $requestEvent->getRequest()->request->all());
+        self::assertEquals(
+            [
+                'cache-control'                    => ['no-cache, private',],
+                'date'                             => [$response->headers->get('date')],
+                'access-control-allow-origin'      => ['http://example.com'],
+                'access-control-allow-methods'     => ['GET, POST, PUT, DELETE, OPTIONS'],
+                'access-control-allow-headers'     => ['Content-Type'],
+                'access-control-allow-credentials' => ['true'],
+                'access-control-max-age'           => ['3600'],
+
+            ],
+            $response->headers->all()
+        );
     }
 
     /**
@@ -132,11 +150,43 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
     }
 
     /**
+     * @throws Exception
+     *
+     * @covers \Hanaboso\RestBundle\Model\EventSubscriber::onKernelResponse
+     */
+    public function testOnKernelResponse(): void
+    {
+        $responseEvent = $this->prepareResponseEvent();
+
+        $this->subscriber->onKernelResponse($responseEvent);
+
+        self::assertEquals(
+            [
+                'cache-control'                    => ['no-cache, private',],
+                'date'                             => [$responseEvent->getResponse()->headers->get('date')],
+                'access-control-allow-origin'      => ['http://example.com'],
+                'access-control-allow-methods'     => ['GET, POST, PUT, DELETE, OPTIONS'],
+                'access-control-allow-headers'     => ['Content-Type'],
+                'access-control-allow-credentials' => ['true'],
+                'access-control-max-age'           => ['3600'],
+
+            ],
+            $responseEvent->getResponse()->headers->all()
+        );
+    }
+
+    /**
      * @covers \Hanaboso\RestBundle\Model\EventSubscriber::getSubscribedEvents
      */
     public function testGetSubscribedEvents(): void
     {
-        self::assertEquals([KernelEvents::REQUEST => 'onKernelRequest'], EventSubscriber::getSubscribedEvents());
+        self::assertEquals(
+            [
+                KernelEvents::REQUEST  => ['onKernelRequest', 250],
+                KernelEvents::RESPONSE => ['onKernelResponse', 250],
+            ],
+            EventSubscriber::getSubscribedEvents()
+        );
     }
 
     /**
@@ -151,17 +201,40 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
     /**
      * @return RequestEvent
+     * @throws Exception
      */
     private function prepareRequestEvent(): RequestEvent
     {
         /** @var Request|MockObject $request */
         $request = self::createMock(Request::class);
+        $request->method('getMethod')->willReturn('OPTIONS');
         $request->method('getContent')->willReturn('{"one":"One"}');
         $request->method('getRequestUri')->willReturn('/api/example');
 
+        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'http://example.com']));
+
         /** @var RequestEvent|MockObject $requestEvent */
-        $requestEvent = self::createMock(RequestEvent::class);
+        $requestEvent = self::createPartialMock(RequestEvent::class, ['getRequest']);
         $requestEvent->method('getRequest')->willReturn($request);
+
+        return $requestEvent;
+    }
+
+    /**
+     * @return ResponseEvent
+     * @throws Exception
+     */
+    private function prepareResponseEvent(): ResponseEvent
+    {
+        /** @var Request|MockObject $request */
+        $request = self::createMock(Request::class);
+        $request->method('getRequestUri')->willReturn('/api/example');
+        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'http://example.com']));
+
+        /** @var ResponseEvent|MockObject $requestEvent */
+        $requestEvent = self::createPartialMock(ResponseEvent::class, ['getRequest', 'getResponse']);
+        $requestEvent->method('getRequest')->willReturn($request);
+        $requestEvent->method('getResponse')->willReturn(new Response());
 
         return $requestEvent;
     }

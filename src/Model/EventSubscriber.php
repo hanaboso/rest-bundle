@@ -2,12 +2,15 @@
 
 namespace Hanaboso\RestBundle\Model;
 
+use Hanaboso\RestBundle\DependencyInjection\Configuration;
 use Hanaboso\RestBundle\Exception\DecoderException;
 use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -18,7 +21,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class EventSubscriber implements EventSubscriberInterface
 {
 
-    private const PATTERN = '~%s~';
+    private const PATTERN     = '~%s~';
+    private const ORIGIN      = 'Access-Control-Allow-Origin';
+    private const HEADERS     = 'Access-Control-Allow-Headers';
+    private const METHODS     = 'Access-Control-Allow-Methods';
+    private const CREDENTIALS = 'Access-Control-Allow-Credentials';
+    private const MAX_AGE     = 'Access-Control-Max-Age';
 
     /**
      * @var mixed[]
@@ -31,6 +39,11 @@ final class EventSubscriber implements EventSubscriberInterface
     private array $decoders;
 
     /**
+     * @var mixed[]
+     */
+    private array $cors;
+
+    /**
      * @var bool
      */
     private bool $strict;
@@ -40,12 +53,14 @@ final class EventSubscriber implements EventSubscriberInterface
      *
      * @param mixed[]            $config
      * @param DecoderInterface[] $decoders
+     * @param mixed[]            $cors
      * @param bool               $strict
      */
-    public function __construct(array $config, array $decoders, bool $strict)
+    public function __construct(array $config, array $decoders, array $cors, bool $strict)
     {
         $this->decoders = $decoders;
         $this->config   = $config;
+        $this->cors     = $cors;
         $this->strict   = $strict;
     }
 
@@ -57,6 +72,20 @@ final class EventSubscriber implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $requestEvent): void
     {
         $request = $requestEvent->getRequest();
+
+        if ($request->getMethod() === 'OPTIONS') {
+            $response = new Response(NULL, 204);
+
+            foreach ($this->cors as $route => $cors) {
+                if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
+                    $this->setHeaders($response, $cors, $request->headers->get('Origin', '*'));
+
+                    break;
+                }
+            }
+
+            $requestEvent->setResponse($response);
+        }
 
         foreach ($this->config as $route => $decoders) {
             if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
@@ -80,18 +109,53 @@ final class EventSubscriber implements EventSubscriberInterface
                         $exceptions
                     );
                 }
-            }
 
-            break;
+                break;
+            }
         }
     }
 
     /**
-     * @return string[]
+     * @param ResponseEvent $responseEvent
+     */
+    public function onKernelResponse(ResponseEvent $responseEvent): void
+    {
+        $response = $responseEvent->getResponse();
+        $request  = $responseEvent->getRequest();
+
+        foreach ($this->cors as $route => $cors) {
+            if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
+                $this->setHeaders($response, $cors, $request->headers->get('Origin', '*'));
+
+                break;
+            }
+        }
+    }
+
+    /**
+     * @return array<string, array<int|string, array<int|string, int|string>|int|string>|string>
      */
     public static function getSubscribedEvents(): array
     {
-        return [KernelEvents::REQUEST => 'onKernelRequest'];
+        return [
+            KernelEvents::REQUEST  => ['onKernelRequest', 250],
+            KernelEvents::RESPONSE => ['onKernelResponse', 250],
+        ];
+    }
+
+    /**
+     * @param Response $response
+     * @param mixed[]  $headers
+     * @param string   $requestOrigin
+     */
+    private function setHeaders(Response $response, array $headers, string $requestOrigin): void
+    {
+        $responseOrigin = implode(', ', $headers[Configuration::ORIGIN]);
+        $response->headers->set(self::ORIGIN, $responseOrigin === '*' ? $requestOrigin : $responseOrigin);
+        $response->headers->set(self::METHODS, implode(', ', $headers[Configuration::METHODS]));
+        $response->headers->set(self::HEADERS, implode(', ', $headers[Configuration::HEADERS]));
+        $response->headers->set(self::CREDENTIALS, $headers[Configuration::CREDENTIALS] ? 'true' : 'false');
+        $response->headers->set(self::MAX_AGE, '3600');
     }
 
 }

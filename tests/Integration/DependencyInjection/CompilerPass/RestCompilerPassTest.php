@@ -33,6 +33,14 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
             'json' => 'rest.decoder.json',
             'xml'  => 'rest.decoder.xml',
         ],
+        Configuration::CORS     => [
+            '^/api' => [
+                Configuration::ORIGIN      => ['*'],
+                Configuration::METHODS     => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+                Configuration::HEADERS     => ['Content-Type'],
+                Configuration::CREDENTIALS => TRUE,
+            ],
+        ],
     ];
 
     /**

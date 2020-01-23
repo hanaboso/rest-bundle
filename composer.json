@@ -1,7 +1,7 @@
 {
     "name": "hanaboso/rest-bundle",
     "license": "proprietary",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "autoload": {
         "psr-4": {
             "Hanaboso\\RestBundle\\": "src"
@@ -21,5 +21,9 @@
     "require-dev": {
         "hanaboso/php-check-utils": "^1.1",
         "symfony/yaml": "^5.0"
+    },
+    "conflict": {
+        "friendsofsymfony/rest-bundle": "*",
+        "nelmio/cors-bundle": "*"
     }
 }

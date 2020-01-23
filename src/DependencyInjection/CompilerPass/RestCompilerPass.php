@@ -78,7 +78,12 @@ final class RestCompilerPass implements CompilerPassInterface
             $this->createKey('subscriber'),
             (new Definition(
                 EventSubscriber::class,
-                [$config[Configuration::ROUTES], $decoders, $config[Configuration::STRICT]]
+                [
+                    $config[Configuration::ROUTES],
+                    $decoders,
+                    $config[Configuration::CORS],
+                    $config[Configuration::STRICT],
+                ]
             ))->addTag('kernel.event_subscriber')
         );
     }
