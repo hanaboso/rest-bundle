@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87f4417ef2d6c60141ccfb2aff955dc1",
+    "content-hash": "37a34ba8babbd4e4d0495a2150ba2e5e",
     "packages": [
         {
             "name": "hanaboso/utils",
