@@ -8,6 +8,7 @@ use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -44,6 +45,11 @@ final class EventSubscriber implements EventSubscriberInterface
     private array $cors;
 
     /**
+     * @var mixed[]
+     */
+    private array $security;
+
+    /**
      * @var bool
      */
     private bool $strict;
@@ -54,13 +60,15 @@ final class EventSubscriber implements EventSubscriberInterface
      * @param mixed[]            $config
      * @param DecoderInterface[] $decoders
      * @param mixed[]            $cors
+     * @param mixed[]            $security
      * @param bool               $strict
      */
-    public function __construct(array $config, array $decoders, array $cors, bool $strict)
+    public function __construct(array $config, array $decoders, array $cors, array $security, bool $strict)
     {
         $this->decoders = $decoders;
         $this->config   = $config;
         $this->cors     = $cors;
+        $this->security = $security;
         $this->strict   = $strict;
     }
 
@@ -76,13 +84,8 @@ final class EventSubscriber implements EventSubscriberInterface
         if ($request->getMethod() === 'OPTIONS') {
             $response = new Response(NULL, 204);
 
-            foreach ($this->cors as $route => $cors) {
-                if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
-                    $this->setHeaders($response, $cors, $request->headers->get('Origin', '*'));
-
-                    break;
-                }
-            }
+            $this->processCorsHeaders($response, $request);
+            $this->processSecurityHeaders($response, $request);
 
             $requestEvent->setResponse($response);
         }
@@ -120,16 +123,8 @@ final class EventSubscriber implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $responseEvent): void
     {
-        $response = $responseEvent->getResponse();
-        $request  = $responseEvent->getRequest();
-
-        foreach ($this->cors as $route => $cors) {
-            if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
-                $this->setHeaders($response, $cors, $request->headers->get('Origin', '*'));
-
-                break;
-            }
-        }
+        $this->processCorsHeaders($responseEvent->getResponse(), $responseEvent->getRequest());
+        $this->processSecurityHeaders($responseEvent->getResponse(), $responseEvent->getRequest());
     }
 
     /**
@@ -145,10 +140,40 @@ final class EventSubscriber implements EventSubscriberInterface
 
     /**
      * @param Response $response
+     * @param Request  $request
+     */
+    private function processCorsHeaders(Response $response, Request $request): void
+    {
+        foreach ($this->cors as $route => $cors) {
+            if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
+                $this->setCorsHeaders($response, $cors, $request->headers->get('Origin', '*'));
+
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param Response $response
+     * @param Request  $request
+     */
+    private function processSecurityHeaders(Response $response, Request $request): void
+    {
+        foreach ($this->security as $route => $security) {
+            if (preg_match(sprintf(self::PATTERN, $route), $request->getRequestUri())) {
+                $this->setSecurityHeaders($response, $security);
+
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param Response $response
      * @param mixed[]  $headers
      * @param string   $requestOrigin
      */
-    private function setHeaders(Response $response, array $headers, string $requestOrigin): void
+    private function setCorsHeaders(Response $response, array $headers, string $requestOrigin): void
     {
         $responseOrigin = implode(', ', $headers[Configuration::ORIGIN]);
         $response->headers->set(self::ORIGIN, $responseOrigin === '*' ? $requestOrigin : $responseOrigin);
@@ -156,6 +181,17 @@ final class EventSubscriber implements EventSubscriberInterface
         $response->headers->set(self::HEADERS, implode(', ', $headers[Configuration::HEADERS]));
         $response->headers->set(self::CREDENTIALS, $headers[Configuration::CREDENTIALS] ? 'true' : 'false');
         $response->headers->set(self::MAX_AGE, '3600');
+    }
+
+    /**
+     * @param Response $response
+     * @param mixed[]  $headers
+     */
+    private function setSecurityHeaders(Response $response, array $headers): void
+    {
+        foreach ($headers as $key => $value) {
+            $response->headers->set($key, $value);
+        }
     }
 
 }

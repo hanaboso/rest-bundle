@@ -58,7 +58,14 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                 'access-control-allow-headers'     => ['Content-Type'],
                 'access-control-allow-credentials' => ['true'],
                 'access-control-max-age'           => ['3600'],
-
+                'x-frame-options'                  => ['sameorigin'],
+                'x-xss-protection'                 => ['1; mode=block'],
+                'x-content-type-options'           => ['nosniff'],
+                'content-security-policy'          => ["default-src * data: blob: 'unsafe-inline' 'unsafe-eval'"],
+                'strict-transport-security'        => ['max-age=31536000; includeSubDomains; preload'],
+                'referrer-policy'                  => ['strict-origin-when-cross-origin'],
+                'feature-policy'                   => ["accelerometer 'self'; ambient-light-sensor 'self'; autoplay 'self'; camera 'self'; cookie 'self'; docwrite 'self'; domain 'self'; encrypted-media 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; magnetometer 'self'; microphone 'self'; midi 'self'; payment 'self'; picture-in-picture 'self'; speaker 'self'; sync-script 'self'; sync-xhr 'self'; unsized-media 'self'; usb 'self'; vertical-scroll 'self'; vibrate 'self'; vr 'self'"],
+                'expect-ct'                        => ['max-age=3600'],
             ],
             $response->headers->all()
         );
@@ -169,7 +176,14 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                 'access-control-allow-headers'     => ['Content-Type'],
                 'access-control-allow-credentials' => ['true'],
                 'access-control-max-age'           => ['3600'],
-
+                'x-frame-options'                  => ['sameorigin'],
+                'x-xss-protection'                 => ['1; mode=block'],
+                'x-content-type-options'           => ['nosniff'],
+                'content-security-policy'          => ["default-src * data: blob: 'unsafe-inline' 'unsafe-eval'"],
+                'strict-transport-security'        => ['max-age=31536000; includeSubDomains; preload'],
+                'referrer-policy'                  => ['strict-origin-when-cross-origin'],
+                'feature-policy'                   => ["accelerometer 'self'; ambient-light-sensor 'self'; autoplay 'self'; camera 'self'; cookie 'self'; docwrite 'self'; domain 'self'; encrypted-media 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; magnetometer 'self'; microphone 'self'; midi 'self'; payment 'self'; picture-in-picture 'self'; speaker 'self'; sync-script 'self'; sync-xhr 'self'; unsized-media 'self'; usb 'self'; vertical-scroll 'self'; vibrate 'self'; vr 'self'"],
+                'expect-ct'                        => ['max-age=3600'],
             ],
             $responseEvent->getResponse()->headers->all()
         );
