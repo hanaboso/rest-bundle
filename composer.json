@@ -1,7 +1,7 @@
 {
     "name": "hanaboso/rest-bundle",
     "license": "proprietary",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "autoload": {
         "psr-4": {
             "Hanaboso\\RestBundle\\": "src"
