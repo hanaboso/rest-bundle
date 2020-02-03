@@ -190,7 +190,7 @@ final class EventSubscriber implements EventSubscriberInterface
     private function setSecurityHeaders(Response $response, array $headers): void
     {
         foreach ($headers as $key => $value) {
-            $response->headers->set($key, $value);
+            $response->headers->set(str_replace('_', '-', $key), $value);
         }
     }
 
