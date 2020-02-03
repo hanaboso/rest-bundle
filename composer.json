@@ -1,7 +1,7 @@
 {
     "name": "hanaboso/rest-bundle",
     "license": "proprietary",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "autoload": {
         "psr-4": {
             "Hanaboso\\RestBundle\\": "src"
@@ -14,6 +14,9 @@
     },
     "require": {
         "php": "^7.4",
+        "ext-ctype": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
         "hanaboso/utils": "^1.0",
         "symfony/dependency-injection": "^5.0",
         "symfony/serializer": "^5.0"
@@ -21,6 +24,14 @@
     "require-dev": {
         "hanaboso/php-check-utils": "^1.1",
         "symfony/yaml": "^5.0"
+    },
+    "replace": {
+        "ralouphie/getallheaders": "*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-intl-idn": "*",
+        "symfony/polyfill-mbstring": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php73": "*"
     },
     "conflict": {
         "friendsofsymfony/rest-bundle": "*",

@@ -1,4 +1,4 @@
-.PHONY: init composer-update codesniffer phpstan phpunit
+.PHONY: init test
 
 DC= docker-compose
 DE= docker-compose exec -T app
@@ -37,19 +37,19 @@ clear-cache:
 init-dev: docker-up-force composer-install
 
 phpcodesniffer:
-	$(DE) vendor/bin/phpcs --standard=ruleset.xml src tests
+	$(DE) ./vendor/bin/phpcs --standard=./ruleset.xml src tests
 
 phpstan:
-	$(DE) vendor/bin/phpstan analyse -c phpstan.neon -l 8 src tests
+	$(DE) ./vendor/bin/phpstan analyse -c ./phpstan.neon -l 8 src tests
 
 phpunit:
-	$(DE) vendor/bin/paratest -c vendor/hanaboso/php-check-utils/phpunit.xml.dist -p 4 --runner=WrapperRunner tests
+	$(DE) ./vendor/bin/paratest -c ./vendor/hanaboso/php-check-utils/phpunit.xml.dist -p 4 --runner=WrapperRunner tests
 
 phpcoverage:
-	$(DE) vendor/bin/paratest -c vendor/hanaboso/php-check-utils/phpunit.xml.dist -p 4 --coverage-html var/coverage --whitelist src tests
+	$(DE) ./vendor/bin/paratest -c ./vendor/hanaboso/php-check-utils/phpunit.xml.dist -p 4 --coverage-html var/coverage --whitelist src tests
 
 phpcoverage-ci:
-	$(DE) ./vendor/hanaboso/php-check-utils/bin/coverage.sh -c 100
+	$(DE) ./vendor/hanaboso/php-check-utils/bin/coverage.sh
 
 test: docker-up-force composer-install fasttest
 
