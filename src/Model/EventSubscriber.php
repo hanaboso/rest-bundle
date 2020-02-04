@@ -175,8 +175,13 @@ final class EventSubscriber implements EventSubscriberInterface
      */
     private function setCorsHeaders(Response $response, array $headers, string $requestOrigin): void
     {
-        $responseOrigin = implode(', ', $headers[Configuration::ORIGIN]);
-        $response->headers->set(self::ORIGIN, $responseOrigin === '*' ? $requestOrigin : $responseOrigin);
+        $responseOrigin = reset($headers[Configuration::ORIGIN]);
+
+        if ($responseOrigin === '*' || @preg_match($responseOrigin, $requestOrigin)) {
+            $responseOrigin = $requestOrigin;
+        }
+
+        $response->headers->set(self::ORIGIN, $responseOrigin);
         $response->headers->set(self::METHODS, implode(', ', $headers[Configuration::METHODS]));
         $response->headers->set(self::HEADERS, implode(', ', $headers[Configuration::HEADERS]));
         $response->headers->set(self::CREDENTIALS, $headers[Configuration::CREDENTIALS] ? 'true' : 'false');
