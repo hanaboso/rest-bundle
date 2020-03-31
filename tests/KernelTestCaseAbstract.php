@@ -3,6 +3,7 @@
 namespace Hanaboso\RestBundleTests;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Throwable;
 
 /**
  * Class KernelTestCaseAbstract
@@ -23,7 +24,7 @@ abstract class KernelTestCaseAbstract extends KernelTestCase
     }
 
     /**
-     * @phpstan-param class-string<\Throwable> $exception
+     * @phpstan-param class-string<Throwable> $exception
      *
      * @param string      $exception
      * @param int|null    $exceptionCode
