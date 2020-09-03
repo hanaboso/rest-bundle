@@ -1,13 +1,17 @@
 includes:
-    - vendor/hanaboso/php-check-utils/phpstan.neon
+	- vendor/hanaboso/php-check-utils/phpstan.neon
 
 parameters:
-    symfony:
-        container_xml_path: %rootDir%/../../../var/cache/test/Hanaboso_RestBundleTests_app_KernelTestDebugContainer.xml
-    ignoreErrors:
-        -
-            message: '#PHPDoc tag @var for variable .+ contains unresolvable type#'
-            path: tests/*
-        -
-            message: '#Call to method Symfony\\Component\\DependencyInjection\\ContainerBuilder::has\(\) with mixed will always evaluate to true#'
-            path: src/DependencyInjection/CompilerPass/RestCompilerPass.php
+	symfony:
+		container_xml_path: %rootDir%/../../../var/cache/test/Hanaboso_RestBundleTests_app_KernelTestDebugContainer.xml
+	ignoreErrors:
+		-
+			message: '#Error suppression via "@" should not be used.#'
+			path: src/Model/EventSubscriber.php
+		-
+			message: '#Call to method Symfony\\Component\\DependencyInjection\\ContainerBuilder::has\(\) with mixed will always evaluate to true#'
+			path: src/DependencyInjection/CompilerPass/RestCompilerPass.php
+	ergebnis:
+			classesAllowedToBeExtended:
+				- Hanaboso\RestBundleTests\KernelTestCaseAbstract
+				- Hanaboso\RestBundle\Exception\DecoderExceptionAbstract

@@ -10,7 +10,6 @@ use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Hanaboso\RestBundle\Model\EventSubscriber;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -219,7 +218,6 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
      */
     private function prepareRequestEvent(): RequestEvent
     {
-        /** @var Request|MockObject $request */
         $request = self::createMock(Request::class);
         $request->method('getMethod')->willReturn('OPTIONS');
         $request->method('getContent')->willReturn('{"one":"One"}');
@@ -227,7 +225,6 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
         $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'http://example.com']));
 
-        /** @var RequestEvent|MockObject $requestEvent */
         $requestEvent = self::createPartialMock(RequestEvent::class, ['getRequest']);
         $requestEvent->method('getRequest')->willReturn($request);
 
@@ -240,12 +237,10 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
      */
     private function prepareResponseEvent(): ResponseEvent
     {
-        /** @var Request|MockObject $request */
         $request = self::createMock(Request::class);
         $request->method('getRequestUri')->willReturn('/api/example');
         $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'http://example.com']));
 
-        /** @var ResponseEvent|MockObject $requestEvent */
         $requestEvent = self::createPartialMock(ResponseEvent::class, ['getRequest', 'getResponse']);
         $requestEvent->method('getRequest')->willReturn($request);
         $requestEvent->method('getResponse')->willReturn(new Response());
