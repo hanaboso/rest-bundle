@@ -50,7 +50,7 @@ final class RestCompilerPass implements CompilerPassInterface
             /** @var object $service */
             $service = $container->get($value);
 
-            if (!in_array(DecoderInterface::class, class_implements(get_class($service)), TRUE)) {
+            if (!in_array(DecoderInterface::class, (array) class_implements(get_class($service)), TRUE)) {
                 throw new LogicException(
                     sprintf("Service '%s' does not implement %s!", $value, DecoderInterface::class)
                 );

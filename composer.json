@@ -1,7 +1,7 @@
 {
     "name": "hanaboso/rest-bundle",
     "license": "Apache-2.0",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "autoload": {
         "psr-4": {
             "Hanaboso\\RestBundle\\": "src"
@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "ext-ctype": "*",
         "ext-intl": "*",
         "ext-mbstring": "*",
