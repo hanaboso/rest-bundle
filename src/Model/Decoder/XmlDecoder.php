@@ -15,18 +15,12 @@ final class XmlDecoder implements DecoderInterface
 {
 
     /**
-     * @var XmlEncoder
-     */
-    private XmlEncoder $encoder;
-
-    /**
      * XmlDecoder constructor.
      *
      * @param XmlEncoder $encoder
      */
-    public function __construct(XmlEncoder $encoder)
+    public function __construct(private XmlEncoder $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     /**

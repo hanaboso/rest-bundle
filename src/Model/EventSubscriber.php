@@ -30,31 +30,6 @@ final class EventSubscriber implements EventSubscriberInterface
     private const MAX_AGE     = 'Access-Control-Max-Age';
 
     /**
-     * @var mixed[]
-     */
-    private array $config;
-
-    /**
-     * @var DecoderInterface[]
-     */
-    private array $decoders;
-
-    /**
-     * @var mixed[]
-     */
-    private array $cors;
-
-    /**
-     * @var mixed[]
-     */
-    private array $security;
-
-    /**
-     * @var bool
-     */
-    private bool $strict;
-
-    /**
      * EventSubscriber constructor.
      *
      * @param mixed[]            $config
@@ -63,13 +38,14 @@ final class EventSubscriber implements EventSubscriberInterface
      * @param mixed[]            $security
      * @param bool               $strict
      */
-    public function __construct(array $config, array $decoders, array $cors, array $security, bool $strict)
+    public function __construct(
+        private array $config,
+        private array $decoders,
+        private array $cors,
+        private array $security,
+        private bool $strict
+    )
     {
-        $this->decoders = $decoders;
-        $this->config   = $config;
-        $this->cors     = $cors;
-        $this->security = $security;
-        $this->strict   = $strict;
     }
 
     /**

@@ -16,11 +16,6 @@ final class DecoderException extends Exception
     public const ERROR = 1;
 
     /**
-     * @var DecoderExceptionAbstract[]
-     */
-    private array $exceptions;
-
-    /**
      * DecoderException constructor.
      *
      * @param string                     $message
@@ -28,11 +23,9 @@ final class DecoderException extends Exception
      * @param Throwable|null             $previous
      * @param DecoderExceptionAbstract[] $exceptions
      */
-    public function __construct(string $message, int $code, ?Throwable $previous = NULL, array $exceptions = [])
+    public function __construct(string $message, int $code, ?Throwable $previous = NULL, private array $exceptions = [])
     {
         parent::__construct($message, $code, $previous);
-
-        $this->exceptions = $exceptions;
     }
 
     /**
