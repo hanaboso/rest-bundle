@@ -67,7 +67,7 @@ final class XmlDecoderTest extends KernelTestCaseAbstract
     {
         parent::setUp();
 
-        $this->decoder = self::$container->get('xml');
+        $this->decoder = self::getContainer()->get('xml');
     }
 
 }

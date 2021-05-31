@@ -40,7 +40,7 @@ final class RestCompilerPass implements CompilerPassInterface
         $container->setDefinition($this->createKey('decoder.json'), new Definition(JsonDecoder::class));
         $container->setDefinition(
             $this->createKey('decoder.xml'),
-            new Definition(XmlDecoder::class, [new Reference($this->createKey('encoder.xml'))])
+            new Definition(XmlDecoder::class, [new Reference($this->createKey('encoder.xml'))]),
         );
 
         foreach ($config[Configuration::DECODERS] as $key => $value) {
@@ -53,14 +53,14 @@ final class RestCompilerPass implements CompilerPassInterface
 
             if (!in_array(DecoderInterface::class, (array) class_implements($service::class), TRUE)) {
                 throw new LogicException(
-                    sprintf("Service '%s' does not implement %s!", $value, DecoderInterface::class)
+                    sprintf("Service '%s' does not implement %s!", $value, DecoderInterface::class),
                 );
             }
 
             $decoderNames[] = $key;
         }
 
-        foreach ($config[Configuration::ROUTES] as $key => $value) {
+        foreach ($config[Configuration::ROUTES] as $value) {
             $missing      = array_diff($value, $decoderNames);
             $missingCount = count($missing);
 
@@ -85,8 +85,8 @@ final class RestCompilerPass implements CompilerPassInterface
                     $config[Configuration::CORS],
                     $config[Configuration::SECURITY],
                     $config[Configuration::STRICT],
-                ]
-            ))->addTag('kernel.event_subscriber')
+                ],
+            ))->addTag('kernel.event_subscriber'),
         );
     }
 

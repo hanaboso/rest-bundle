@@ -66,7 +66,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                 'feature-policy'                   => ["accelerometer 'self'; ambient-light-sensor 'self'; autoplay 'self'; camera 'self'; cookie 'self'; docwrite 'self'; domain 'self'; encrypted-media 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; magnetometer 'self'; microphone 'self'; midi 'self'; payment 'self'; picture-in-picture 'self'; speaker 'self'; sync-script 'self'; sync-xhr 'self'; unsized-media 'self'; usb 'self'; vertical-scroll 'self'; vibrate 'self'; vr 'self'"],
                 'expect-ct'                        => ['max-age=3600'],
             ],
-            $response->headers->all()
+            $response->headers->all(),
         );
     }
 
@@ -96,7 +96,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                         throw new JsonDecoderException(
                             'Something gone terribly wrong!',
                             JsonDecoderException::ERROR,
-                            new Exception('Unknown JSON error!')
+                            new Exception('Unknown JSON error!'),
                         );
                     }
 
@@ -115,12 +115,12 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                         throw new XmlDecoderException(
                             'Something gone terribly wrong!',
                             XmlDecoderException::ERROR,
-                            new Exception('Unknown XML error!')
+                            new Exception('Unknown XML error!'),
                         );
                     }
 
                 },
-            ]
+            ],
         );
 
         try {
@@ -184,7 +184,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                 'feature-policy'                   => ["accelerometer 'self'; ambient-light-sensor 'self'; autoplay 'self'; camera 'self'; cookie 'self'; docwrite 'self'; domain 'self'; encrypted-media 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; magnetometer 'self'; microphone 'self'; midi 'self'; payment 'self'; picture-in-picture 'self'; speaker 'self'; sync-script 'self'; sync-xhr 'self'; unsized-media 'self'; usb 'self'; vertical-scroll 'self'; vibrate 'self'; vr 'self'"],
                 'expect-ct'                        => ['max-age=3600'],
             ],
-            $responseEvent->getResponse()->headers->all()
+            $responseEvent->getResponse()->headers->all(),
         );
     }
 
@@ -198,7 +198,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
                 KernelEvents::REQUEST  => ['onKernelRequest', 250],
                 KernelEvents::RESPONSE => ['onKernelResponse', 250],
             ],
-            EventSubscriber::getSubscribedEvents()
+            EventSubscriber::getSubscribedEvents(),
         );
     }
 
@@ -209,7 +209,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
     {
         parent::setUp();
 
-        $this->subscriber = self::$container->get('subscriber');
+        $this->subscriber = self::getContainer()->get('subscriber');
     }
 
     /**

@@ -33,7 +33,7 @@ abstract class KernelTestCaseAbstract extends KernelTestCase
     protected function assertException(
         string $exception,
         ?int $exceptionCode = NULL,
-        ?string $exceptionMessage = NULL
+        ?string $exceptionMessage = NULL,
     ): void
     {
         self::expectException($exception);

@@ -51,7 +51,7 @@ final class JsonDecoderTest extends KernelTestCaseAbstract
     {
         parent::setUp();
 
-        $this->decoder = self::$container->get('json');
+        $this->decoder = self::getContainer()->get('json');
     }
 
 }

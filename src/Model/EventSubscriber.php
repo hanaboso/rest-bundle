@@ -7,7 +7,7 @@ use Hanaboso\RestBundle\Exception\DecoderException;
 use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -43,7 +43,7 @@ final class EventSubscriber implements EventSubscriberInterface
         private array $decoders,
         private array $cors,
         private array $security,
-        private bool $strict
+        private bool $strict,
     )
     {
     }
@@ -72,7 +72,7 @@ final class EventSubscriber implements EventSubscriberInterface
 
                 foreach ($decoders as $decoder) {
                     try {
-                        $request->request = new ParameterBag($this->decoders[$decoder]->decode($request->getContent()));
+                        $request->request = new InputBag($this->decoders[$decoder]->decode($request->getContent()));
 
                         break;
                     } catch (DecoderExceptionAbstract $exception) {
@@ -85,7 +85,7 @@ final class EventSubscriber implements EventSubscriberInterface
                         'Cannot decode given content!',
                         DecoderException::ERROR,
                         NULL,
-                        $exceptions
+                        $exceptions,
                     );
                 }
 

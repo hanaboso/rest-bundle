@@ -96,7 +96,7 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
         self::assertException(
             LogicException::class,
             0,
-            sprintf("Service 'unknown' does not implement %s!", DecoderInterface::class)
+            sprintf("Service 'unknown' does not implement %s!", DecoderInterface::class),
         );
 
         $builder = $this->prepareContainerBuilder([Configuration::DECODERS => ['unknown']]);
@@ -127,7 +127,7 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
         self::assertException(LogicException::class, 0, "Decoders 'Unknown', 'Another Unknown' not found!");
 
         $this->compilerPass->process(
-            $this->prepareContainerBuilder([Configuration::ROUTES => ['^/' => ['Unknown', 'Another Unknown']]])
+            $this->prepareContainerBuilder([Configuration::ROUTES => ['^/' => ['Unknown', 'Another Unknown']]]),
         );
     }
 
