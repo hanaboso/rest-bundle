@@ -5,6 +5,7 @@ namespace Hanaboso\RestBundleTests\Integration\Model;
 use Exception;
 use Hanaboso\PhpCheckUtils\PhpUnit\Traits\PrivateTrait;
 use Hanaboso\RestBundle\Exception\DecoderException;
+use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Exception\JsonDecoderException;
 use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
@@ -95,7 +96,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
                         throw new JsonDecoderException(
                             'Something gone terribly wrong!',
-                            JsonDecoderException::ERROR,
+                            DecoderExceptionAbstract::ERROR,
                             new Exception('Unknown JSON error!'),
                         );
                     }
@@ -114,7 +115,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
                         throw new XmlDecoderException(
                             'Something gone terribly wrong!',
-                            XmlDecoderException::ERROR,
+                            DecoderExceptionAbstract::ERROR,
                             new Exception('Unknown XML error!'),
                         );
                     }
@@ -140,9 +141,9 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
             self::assertInstanceOf(XmlDecoderException::class, $xmlException);
 
             self::assertEquals('Something gone terribly wrong!', $jsonException->getMessage());
-            self::assertEquals(JsonDecoderException::ERROR, $jsonException->getCode());
+            self::assertEquals(DecoderExceptionAbstract::ERROR, $jsonException->getCode());
             self::assertEquals('Something gone terribly wrong!', $xmlException->getMessage());
-            self::assertEquals(XmlDecoderException::ERROR, $xmlException->getCode());
+            self::assertEquals(DecoderExceptionAbstract::ERROR, $xmlException->getCode());
 
             $jsonPreviousException = $jsonException->getPrevious();
             $xmlPreviousException  = $xmlException->getPrevious();

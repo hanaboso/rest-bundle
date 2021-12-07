@@ -2,6 +2,7 @@
 
 namespace Hanaboso\RestBundle\Model\Decoder;
 
+use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Exception\JsonDecoderException;
 use Hanaboso\Utils\String\Json;
 use Throwable;
@@ -25,7 +26,7 @@ final class JsonDecoder implements DecoderInterface
         try {
             return Json::decode($content);
         } catch (Throwable $throwable) {
-            throw new JsonDecoderException($throwable->getMessage(), JsonDecoderException::ERROR, $throwable);
+            throw new JsonDecoderException($throwable->getMessage(), DecoderExceptionAbstract::ERROR, $throwable);
         }
     }
 
