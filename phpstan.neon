@@ -9,8 +9,8 @@ parameters:
 			message: '#Error suppression via "@" should not be used.#'
 			path: src/Model/EventSubscriber.php
 		-
-			message: '#Call to method Symfony\\Component\\DependencyInjection\\ContainerBuilder::has\(\) with mixed will always evaluate to true#'
-			path: src/DependencyInjection/CompilerPass/RestCompilerPass.php
+			message: '#Call to static method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with false will always evaluate to false#'
+			path: tests/Integration/DependencyInjection/CompilerPass/RestCompilerPassTest.php
 	ergebnis:
 			classesAllowedToBeExtended:
 				- Hanaboso\RestBundleTests\KernelTestCaseAbstract
