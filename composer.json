@@ -29,5 +29,11 @@
     "conflict": {
         "friendsofsymfony/rest-bundle": "*",
         "nelmio/cors-bundle": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ergebnis/composer-normalize": true
+        }
     }
 }
