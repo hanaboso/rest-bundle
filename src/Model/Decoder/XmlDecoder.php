@@ -20,7 +20,7 @@ final class XmlDecoder implements DecoderInterface
      *
      * @param XmlEncoder $encoder
      */
-    public function __construct(private XmlEncoder $encoder)
+    public function __construct(private readonly XmlEncoder $encoder)
     {
     }
 

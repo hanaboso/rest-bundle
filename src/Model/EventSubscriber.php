@@ -39,10 +39,10 @@ final class EventSubscriber implements EventSubscriberInterface
      * @param bool               $strict
      */
     public function __construct(
-        private array $config,
+        private readonly array $config,
         private array $decoders,
-        private array $cors,
-        private array $security,
+        private readonly array $cors,
+        private readonly array $security,
         private bool $strict,
     )
     {

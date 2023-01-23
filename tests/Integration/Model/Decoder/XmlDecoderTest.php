@@ -62,7 +62,7 @@ final class XmlDecoderTest extends KernelTestCaseAbstract
     }
 
     /**
-     *
+     * @throws Exception
      */
     protected function setUp(): void
     {

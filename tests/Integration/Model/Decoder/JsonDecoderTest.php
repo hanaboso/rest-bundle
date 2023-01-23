@@ -46,7 +46,7 @@ final class JsonDecoderTest extends KernelTestCaseAbstract
     }
 
     /**
-     *
+     * @throws Exception
      */
     protected function setUp(): void
     {

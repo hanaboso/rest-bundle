@@ -23,7 +23,12 @@ final class DecoderException extends Exception
      * @param Throwable|null             $previous
      * @param DecoderExceptionAbstract[] $exceptions
      */
-    public function __construct(string $message, int $code, ?Throwable $previous = NULL, private array $exceptions = [])
+    public function __construct(
+        string $message,
+        int $code,
+        ?Throwable $previous = NULL,
+        private readonly array $exceptions = [],
+    )
     {
         parent::__construct($message, $code, $previous);
     }

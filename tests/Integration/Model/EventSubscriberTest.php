@@ -53,7 +53,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
             [
                 'cache-control'                    => ['no-cache, private',],
                 'date'                             => [$response->headers->get('date')],
-                'access-control-allow-origin'      => ['http://example.com'],
+                'access-control-allow-origin'      => ['https://example.com'],
                 'access-control-allow-methods'     => ['GET, POST, PUT, DELETE, OPTIONS'],
                 'access-control-allow-headers'     => ['Content-Type'],
                 'access-control-allow-credentials' => ['true'],
@@ -171,7 +171,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
             [
                 'cache-control'                    => ['no-cache, private',],
                 'date'                             => [$responseEvent->getResponse()->headers->get('date')],
-                'access-control-allow-origin'      => ['http://example.com'],
+                'access-control-allow-origin'      => ['https://example.com'],
                 'access-control-allow-methods'     => ['GET, POST, PUT, DELETE, OPTIONS'],
                 'access-control-allow-headers'     => ['Content-Type'],
                 'access-control-allow-credentials' => ['true'],
@@ -204,7 +204,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
     }
 
     /**
-     *
+     * @throws Exception
      */
     protected function setUp(): void
     {
@@ -224,7 +224,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
         $request->method('getContent')->willReturn('{"one":"One"}');
         $request->method('getRequestUri')->willReturn('/api/example');
 
-        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'http://example.com']));
+        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'https://example.com']));
 
         $requestEvent = self::createPartialMock(RequestEvent::class, ['getRequest']);
         $requestEvent->method('getRequest')->willReturn($request);
@@ -240,7 +240,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
     {
         $request = self::createMock(Request::class);
         $request->method('getRequestUri')->willReturn('/api/example');
-        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'http://example.com']));
+        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'https://example.com']));
 
         $requestEvent = self::createPartialMock(ResponseEvent::class, ['getRequest', 'getResponse']);
         $requestEvent->method('getRequest')->willReturn($request);
