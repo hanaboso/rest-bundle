@@ -25,34 +25,34 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
 {
 
     private const PARAMETERS = [
-        Configuration::STRICT   => FALSE,
-        Configuration::ROUTES   => [
-            '^/api' => ['json', 'xml'],
+        Configuration::CORS     => [
+            '^/api' => [
+                Configuration::CREDENTIALS => TRUE,
+                Configuration::HEADERS     => ['Content-Type'],
+                Configuration::METHODS     => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+                Configuration::ORIGIN      => ['*'],
+            ],
         ],
         Configuration::DECODERS => [
             'json' => 'rest.decoder.json',
             'xml'  => 'rest.decoder.xml',
         ],
-        Configuration::CORS     => [
-            '^/api' => [
-                Configuration::ORIGIN      => ['*'],
-                Configuration::METHODS     => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-                Configuration::HEADERS     => ['Content-Type'],
-                Configuration::CREDENTIALS => TRUE,
-            ],
+        Configuration::ROUTES   => [
+            '^/api' => ['json', 'xml'],
         ],
         Configuration::SECURITY => [
             '^/api' => [
+                Configuration::CONTENT_SECURITY_POLICY   => "default-src * data: blob: 'unsafe-inline' 'unsafe-eval'",
+                Configuration::EXPECT_CT                 => 'max-age=3600',
+                Configuration::FEATURE_POLICY            => "accelerometer 'self'; ambient-light-sensor 'self'; autoplay 'self'; camera 'self'; cookie 'self'; docwrite 'self'; domain 'self'; encrypted-media 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; magnetometer 'self'; microphone 'self'; midi 'self'; payment 'self'; picture-in-picture 'self'; speaker 'self'; sync-script 'self'; sync-xhr 'self'; unsized-media 'self'; usb 'self'; vertical-scroll 'self'; vibrate 'self'; vr 'self'",
+                Configuration::REFERER_POLICY            => 'strict-origin-when-cross-origin',
+                Configuration::STRICT_TRANSPORT_SECURITY => 'max-age=31536000; includeSubDomains; preload',
+                Configuration::X_CONTENT_TYPE_OPTIONS    => 'nosniff',
                 Configuration::X_FRAME_OPTIONS           => 'sameorigin',
                 Configuration::X_XSS_PROTECTION          => '1; mode=block',
-                Configuration::X_CONTENT_TYPE_OPTIONS    => 'nosniff',
-                Configuration::CONTENT_SECURITY_POLICY   => "default-src * data: blob: 'unsafe-inline' 'unsafe-eval'",
-                Configuration::STRICT_TRANSPORT_SECURITY => 'max-age=31536000; includeSubDomains; preload',
-                Configuration::REFERER_POLICY            => 'strict-origin-when-cross-origin',
-                Configuration::FEATURE_POLICY            => "accelerometer 'self'; ambient-light-sensor 'self'; autoplay 'self'; camera 'self'; cookie 'self'; docwrite 'self'; domain 'self'; encrypted-media 'self'; fullscreen 'self'; geolocation 'self'; gyroscope 'self'; magnetometer 'self'; microphone 'self'; midi 'self'; payment 'self'; picture-in-picture 'self'; speaker 'self'; sync-script 'self'; sync-xhr 'self'; unsized-media 'self'; usb 'self'; vertical-scroll 'self'; vibrate 'self'; vr 'self'",
-                Configuration::EXPECT_CT                 => 'max-age=3600',
             ],
         ],
+        Configuration::STRICT   => FALSE,
     ];
 
     /**
