@@ -11,7 +11,7 @@ use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Hanaboso\RestBundle\Model\EventSubscriber;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -224,7 +224,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
         $request->method('getContent')->willReturn('{"one":"One"}');
         $request->method('getRequestUri')->willReturn('/api/example');
 
-        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'https://example.com']));
+        $this->setProperty($request, 'headers', new HeaderBag(['Origin' => 'https://example.com']));
 
         $requestEvent = self::createPartialMock(RequestEvent::class, ['getRequest']);
         $requestEvent->method('getRequest')->willReturn($request);
@@ -240,7 +240,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
     {
         $request = self::createMock(Request::class);
         $request->method('getRequestUri')->willReturn('/api/example');
-        $this->setProperty($request, 'headers', new ParameterBag(['Origin' => 'https://example.com']));
+        $this->setProperty($request, 'headers', new HeaderBag(['Origin' => 'https://example.com']));
 
         $requestEvent = self::createPartialMock(ResponseEvent::class, ['getRequest', 'getResponse']);
         $requestEvent->method('getRequest')->willReturn($request);

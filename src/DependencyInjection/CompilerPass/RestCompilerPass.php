@@ -31,7 +31,6 @@ final class RestCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        /** @var mixed[] $config */
         $config       = $container->getParameter(RestBundle::KEY);
         $decoders     = [];
         $decoderNames = [];
