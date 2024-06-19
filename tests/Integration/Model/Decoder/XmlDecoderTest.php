@@ -8,15 +8,14 @@ use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\XmlDecoder;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Class XmlDecoderTest
  *
  * @package Hanaboso\RestBundleTests\Integration\Model\Decoder
- *
- * @covers  \Hanaboso\RestBundle\Model\Decoder\XmlDecoder
  */
+#[CoversClass(XmlDecoder::class)]
 final class XmlDecoderTest extends KernelTestCaseAbstract
 {
 
@@ -30,19 +29,7 @@ final class XmlDecoderTest extends KernelTestCaseAbstract
     private XmlDecoder $decoder;
 
     /**
-     *
-     */
-    public function testCreate(): void
-    {
-        new XmlDecoder(new XmlEncoder());
-
-        self::assertFake();
-    }
-
-    /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\Decoder\XmlDecoder::decode
      */
     public function testDecode(): void
     {
@@ -51,8 +38,6 @@ final class XmlDecoderTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\Decoder\XmlDecoder::decode
      */
     public function testDecodeException(): void
     {

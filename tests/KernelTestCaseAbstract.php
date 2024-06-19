@@ -2,6 +2,7 @@
 
 namespace Hanaboso\RestBundleTests;
 
+use Hanaboso\PhpCheckUtils\PhpUnit\Traits\RestoreErrorHandlersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Throwable;
 
@@ -12,6 +13,8 @@ use Throwable;
  */
 abstract class KernelTestCaseAbstract extends KernelTestCase
 {
+
+    use RestoreErrorHandlersTrait;
 
     /**
      *
@@ -45,6 +48,16 @@ abstract class KernelTestCaseAbstract extends KernelTestCase
         if ($exceptionMessage) {
             self::expectExceptionMessage($exceptionMessage);
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void {
+        parent::tearDown();
+
+        $this->restoreErrorHandler();
+        $this->restoreExceptionHandler();
     }
 
 }

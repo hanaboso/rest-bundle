@@ -9,6 +9,7 @@ use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Hanaboso\RestBundle\RestBundle;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
 use LogicException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use stdClass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -18,9 +19,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
  * Class RestCompilerPassTest
  *
  * @package Hanaboso\RestBundleTests\Integration\DependencyInjection\CompilerPass
- *
- * @covers  \Hanaboso\RestBundle\DependencyInjection\CompilerPass\RestCompilerPass
  */
+#[CoversClass(RestCompilerPass::class)]
 final class RestCompilerPassTest extends KernelTestCaseAbstract
 {
 
@@ -62,8 +62,6 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\DependencyInjection\CompilerPass\RestCompilerPass::process
      */
     public function testProcess(): void
     {
@@ -76,8 +74,6 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\DependencyInjection\CompilerPass\RestCompilerPass::process
      */
     public function testProcessMissingDecoderService(): void
     {
@@ -88,8 +84,6 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\DependencyInjection\CompilerPass\RestCompilerPass::process
      */
     public function testProcessMissingDecoderInterface(): void
     {
@@ -107,8 +101,6 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\DependencyInjection\CompilerPass\RestCompilerPass::process
      */
     public function testProcessMissingDecoder(): void
     {
@@ -119,8 +111,6 @@ final class RestCompilerPassTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\DependencyInjection\CompilerPass\RestCompilerPass::process
      */
     public function testProcessMissingDecoders(): void
     {

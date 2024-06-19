@@ -4,19 +4,19 @@ namespace Hanaboso\RestBundleTests\Integration\Exception;
 
 use Hanaboso\RestBundle\Exception\DecoderException;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Class DecoderExceptionTest
  *
  * @package Hanaboso\RestBundleTests\Integration\Exception
- *
- * @covers  \Hanaboso\RestBundle\Exception\DecoderException
  */
+#[CoversClass(DecoderException::class)]
 final class DecoderExceptionTest extends KernelTestCaseAbstract
 {
 
     /**
-     * @covers \Hanaboso\RestBundle\Exception\DecoderException::getExceptions
+     * @return void
      */
     public function testGetExceptions(): void
     {

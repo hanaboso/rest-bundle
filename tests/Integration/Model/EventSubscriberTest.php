@@ -11,6 +11,7 @@ use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Hanaboso\RestBundle\Model\EventSubscriber;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * Class EventSubscriberTest
  *
  * @package Hanaboso\RestBundleTests\Integration\Model
- *
- * @covers  \Hanaboso\RestBundle\Model\EventSubscriber
  */
+#[CoversClass(EventSubscriber::class)]
 final class EventSubscriberTest extends KernelTestCaseAbstract
 {
 
@@ -37,8 +37,6 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\EventSubscriber::onKernelRequest
      */
     public function testOnKernelRequest(): void
     {
@@ -73,8 +71,6 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\EventSubscriber::onKernelRequest
      */
     public function testOnKernelRequestException(): void
     {
@@ -158,8 +154,6 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\EventSubscriber::onKernelResponse
      */
     public function testOnKernelResponse(): void
     {
@@ -190,7 +184,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
     }
 
     /**
-     * @covers \Hanaboso\RestBundle\Model\EventSubscriber::getSubscribedEvents
+     * @return void
      */
     public function testGetSubscribedEvents(): void
     {

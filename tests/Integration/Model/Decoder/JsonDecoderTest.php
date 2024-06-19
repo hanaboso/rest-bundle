@@ -7,14 +7,14 @@ use Hanaboso\RestBundle\Exception\DecoderExceptionAbstract;
 use Hanaboso\RestBundle\Exception\JsonDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\JsonDecoder;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * Class JsonDecoderTest
  *
  * @package Hanaboso\RestBundleTests\Integration\Model\Decoder
- *
- * @covers  \Hanaboso\RestBundle\Model\Decoder\JsonDecoder
  */
+#[CoversClass(JsonDecoder::class)]
 final class JsonDecoderTest extends KernelTestCaseAbstract
 {
 
@@ -25,8 +25,6 @@ final class JsonDecoderTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\Decoder\JsonDecoder::decode
      */
     public function testDecode(): void
     {
@@ -35,8 +33,6 @@ final class JsonDecoderTest extends KernelTestCaseAbstract
 
     /**
      * @throws Exception
-     *
-     * @covers \Hanaboso\RestBundle\Model\Decoder\JsonDecoder::decode
      */
     public function testDecodeException(): void
     {
