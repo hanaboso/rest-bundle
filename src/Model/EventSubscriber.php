@@ -22,12 +22,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class EventSubscriber implements EventSubscriberInterface
 {
 
-    private const PATTERN     = '~%s~';
-    private const ORIGIN      = 'Access-Control-Allow-Origin';
-    private const HEADERS     = 'Access-Control-Allow-Headers';
-    private const METHODS     = 'Access-Control-Allow-Methods';
-    private const CREDENTIALS = 'Access-Control-Allow-Credentials';
-    private const MAX_AGE     = 'Access-Control-Max-Age';
+    private const string PATTERN     = '~%s~';
+    private const string ORIGIN      = 'Access-Control-Allow-Origin';
+    private const string HEADERS     = 'Access-Control-Allow-Headers';
+    private const string METHODS     = 'Access-Control-Allow-Methods';
+    private const string CREDENTIALS = 'Access-Control-Allow-Credentials';
+    private const string MAX_AGE     = 'Access-Control-Max-Age';
 
     /**
      * EventSubscriber constructor.
@@ -104,7 +104,7 @@ final class EventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array<string, array<int|string, array<int|string, int|string>|int|string>|string>
+     * @return array<string, list<array{0: string, 1?: int}|int|string>|string>
      */
     public static function getSubscribedEvents(): array
     {

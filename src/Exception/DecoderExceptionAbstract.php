@@ -12,6 +12,6 @@ use Exception;
 abstract class DecoderExceptionAbstract extends Exception
 {
 
-    public const ERROR = 1;
+    public const int ERROR = 1;
 
 }

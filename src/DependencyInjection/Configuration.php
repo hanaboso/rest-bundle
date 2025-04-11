@@ -19,23 +19,23 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 final class Configuration implements ConfigurationInterface
 {
 
-    public const STRICT                    = 'strict';
-    public const ROUTES                    = 'routes';
-    public const DECODERS                  = 'decoders';
-    public const CORS                      = 'cors';
-    public const SECURITY                  = 'security';
-    public const ORIGIN                    = 'origin';
-    public const METHODS                   = 'methods';
-    public const HEADERS                   = 'headers';
-    public const CREDENTIALS               = 'credentials';
-    public const X_FRAME_OPTIONS           = 'X_Frame_Options';
-    public const X_XSS_PROTECTION          = 'X_XSS_Protection';
-    public const X_CONTENT_TYPE_OPTIONS    = 'X_Content_Type_Options';
-    public const STRICT_TRANSPORT_SECURITY = 'Strict_Transport_Security';
-    public const REFERER_POLICY            = 'Referrer_Policy';
-    public const CONTENT_SECURITY_POLICY   = 'Content_Security_Policy';
-    public const EXPECT_CT                 = 'Expect_CT';
-    public const FEATURE_POLICY            = 'Feature_Policy';
+    public const string STRICT                    = 'strict';
+    public const string ROUTES                    = 'routes';
+    public const string DECODERS                  = 'decoders';
+    public const string CORS                      = 'cors';
+    public const string SECURITY                  = 'security';
+    public const string ORIGIN                    = 'origin';
+    public const string METHODS                   = 'methods';
+    public const string HEADERS                   = 'headers';
+    public const string CREDENTIALS               = 'credentials';
+    public const string X_FRAME_OPTIONS           = 'X_Frame_Options';
+    public const string X_XSS_PROTECTION          = 'X_XSS_Protection';
+    public const string X_CONTENT_TYPE_OPTIONS    = 'X_Content_Type_Options';
+    public const string STRICT_TRANSPORT_SECURITY = 'Strict_Transport_Security';
+    public const string REFERER_POLICY            = 'Referrer_Policy';
+    public const string CONTENT_SECURITY_POLICY   = 'Content_Security_Policy';
+    public const string EXPECT_CT                 = 'Expect_CT';
+    public const string FEATURE_POLICY            = 'Feature_Policy';
 
     /**
      * @return TreeBuilder

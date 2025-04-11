@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 final class RestBundle extends Bundle
 {
 
-    public const KEY = 'rest';
+    public const string KEY = 'rest';
 
     /**
      * @param ContainerBuilder $container

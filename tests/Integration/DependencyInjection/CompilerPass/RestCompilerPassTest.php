@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 final class RestCompilerPassTest extends KernelTestCaseAbstract
 {
 
-    private const PARAMETERS = [
+    private const array PARAMETERS = [
         Configuration::CORS     => [
             '^/api' => [
                 Configuration::CREDENTIALS => TRUE,

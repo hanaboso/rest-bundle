@@ -21,7 +21,7 @@ final class XmlDecoderTest extends KernelTestCaseAbstract
 
     use CustomAssertTrait;
 
-    private const XML = '<?xml version="1.0" encoding="UTF-8"?><parent><one>One</one><two>Two</two></parent>';
+    private const string XML = '<?xml version="1.0" encoding="UTF-8"?><parent><one>One</one><two>Two</two></parent>';
 
     /**
      * @var XmlDecoder

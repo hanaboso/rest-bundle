@@ -125,8 +125,8 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
 
             self::fail('Must throw exception!');
         } catch (DecoderException $exception) {
-            self::assertEquals('Cannot decode given content!', $exception->getMessage());
-            self::assertEquals(DecoderException::ERROR, $exception->getCode());
+            self::assertSame('Cannot decode given content!', $exception->getMessage());
+            self::assertSame(DecoderException::ERROR, $exception->getCode());
 
             $exceptions = $exception->getExceptions();
             self::assertCount(2, $exceptions);
@@ -136,17 +136,17 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
             self::assertInstanceOf(JsonDecoderException::class, $jsonException);
             self::assertInstanceOf(XmlDecoderException::class, $xmlException);
 
-            self::assertEquals('Something gone terribly wrong!', $jsonException->getMessage());
-            self::assertEquals(DecoderExceptionAbstract::ERROR, $jsonException->getCode());
-            self::assertEquals('Something gone terribly wrong!', $xmlException->getMessage());
-            self::assertEquals(DecoderExceptionAbstract::ERROR, $xmlException->getCode());
+            self::assertSame('Something gone terribly wrong!', $jsonException->getMessage());
+            self::assertSame(DecoderExceptionAbstract::ERROR, $jsonException->getCode());
+            self::assertSame('Something gone terribly wrong!', $xmlException->getMessage());
+            self::assertSame(DecoderExceptionAbstract::ERROR, $xmlException->getCode());
 
             $jsonPreviousException = $jsonException->getPrevious();
             $xmlPreviousException  = $xmlException->getPrevious();
 
             if ($jsonPreviousException && $xmlPreviousException) {
-                self::assertEquals('Unknown JSON error!', $jsonPreviousException->getMessage());
-                self::assertEquals('Unknown XML error!', $xmlPreviousException->getMessage());
+                self::assertSame('Unknown JSON error!', $jsonPreviousException->getMessage());
+                self::assertSame('Unknown XML error!', $xmlPreviousException->getMessage());
             }
 
         }

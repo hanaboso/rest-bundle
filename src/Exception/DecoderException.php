@@ -13,7 +13,7 @@ use Throwable;
 final class DecoderException extends Exception
 {
 
-    public const ERROR = 1;
+    public const int ERROR = 1;
 
     /**
      * DecoderException constructor.
