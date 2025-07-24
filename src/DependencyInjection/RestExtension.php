@@ -5,14 +5,12 @@ namespace Hanaboso\RestBundle\DependencyInjection;
 use Exception;
 use Hanaboso\RestBundle\RestBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 
 /**
  * Class RestExtension
  *
  * @package Hanaboso\RestBundle\DependencyInjection
- *
- * @codeCoverageIgnore
  */
 final class RestExtension extends Extension
 {
