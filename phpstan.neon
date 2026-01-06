@@ -11,6 +11,9 @@ parameters:
 		-
 			message: '#Call to static method PHPUnit\\Framework\\Assert\:\:assertTrue\(\) with false will always evaluate to false#'
 			path: tests/Integration/DependencyInjection/CompilerPass/RestCompilerPassTest.php
+		-
+			message: '#.*#'
+			path: tests/app/config/reference.php
 	ergebnis:
 			classesAllowedToBeExtended:
 				- Hanaboso\RestBundleTests\KernelTestCaseAbstract

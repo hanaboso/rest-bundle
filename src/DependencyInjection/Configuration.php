@@ -38,7 +38,7 @@ final class Configuration implements ConfigurationInterface
     public const string FEATURE_POLICY            = 'Feature_Policy';
 
     /**
-     * @return TreeBuilder
+     * @return TreeBuilder<'array'>
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -50,12 +50,9 @@ final class Configuration implements ConfigurationInterface
         $rootNode->children()->arrayNode(self::ROUTES)->arrayPrototype()->scalarPrototype();
         $rootNode->children()->arrayNode(self::DECODERS)->scalarPrototype();
 
-        /** @var ArrayNodeDefinition $origin */
-        $origin = (new ArrayNodeDefinition(self::ORIGIN))->scalarPrototype()->end();
-        /** @var ArrayNodeDefinition $methods */
-        $methods = (new ArrayNodeDefinition(self::METHODS))->scalarPrototype()->end();
-        /** @var ArrayNodeDefinition $headers */
-        $headers = (new ArrayNodeDefinition(self::HEADERS))->scalarPrototype()->end();
+        $origin  = new ArrayNodeDefinition(self::ORIGIN)->scalarPrototype()->end();
+        $methods = new ArrayNodeDefinition(self::METHODS)->scalarPrototype()->end();
+        $headers = new ArrayNodeDefinition(self::HEADERS)->scalarPrototype()->end();
 
         $rootNode
             ->children()
