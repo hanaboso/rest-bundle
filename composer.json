@@ -2,7 +2,7 @@
     "name": "hanaboso/rest-bundle",
     "description": "Hanaboso - rest-bundle",
     "license": "Apache-2.0",
-    "version": "1.5.1",
+    "version": "1.6.0",
     "autoload": {
         "psr-4": {
             "Hanaboso\\RestBundle\\": "src"
@@ -18,13 +18,13 @@
         "ext-ctype": "*",
         "ext-intl": "*",
         "ext-mbstring": "*",
-        "hanaboso/utils": "^1.6",
-        "symfony/dependency-injection": "^7.3",
-        "symfony/serializer": "^7.3"
+        "hanaboso/utils": "^2.0",
+        "symfony/dependency-injection": "^8.0",
+        "symfony/serializer": "^8.0"
     },
     "require-dev": {
-        "hanaboso/php-check-utils": "^1.7",
-        "symfony/yaml": "^7.3"
+        "hanaboso/php-check-utils": "^2.0",
+        "symfony/yaml": "^8.0"
     },
     "conflict": {
         "friendsofsymfony/rest-bundle": "*",

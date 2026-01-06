@@ -11,6 +11,7 @@ use Hanaboso\RestBundle\Exception\XmlDecoderException;
 use Hanaboso\RestBundle\Model\Decoder\DecoderInterface;
 use Hanaboso\RestBundle\Model\EventSubscriber;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  *
  * @package Hanaboso\RestBundleTests\Integration\Model
  */
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(EventSubscriber::class)]
 final class EventSubscriberTest extends KernelTestCaseAbstract
 {
