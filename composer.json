@@ -2,7 +2,28 @@
     "name": "hanaboso/rest-bundle",
     "description": "Hanaboso - rest-bundle",
     "license": "Apache-2.0",
-    "version": "1.6.0",
+    "version": "1.7.0",
+    "require": {
+        "php": "^8.5",
+        "ext-ctype": "*",
+        "ext-intl": "*",
+        "ext-mbstring": "*",
+        "hanaboso/utils": "^2.1",
+        "symfony/config": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/event-dispatcher": "^8.1",
+        "symfony/http-foundation": "^8.1",
+        "symfony/http-kernel": "^8.1",
+        "symfony/serializer": "^8.1"
+    },
+    "require-dev": {
+        "hanaboso/php-check-utils": "^2.1",
+        "symfony/yaml": "^8.1"
+    },
+    "conflict": {
+        "friendsofsymfony/rest-bundle": "*",
+        "nelmio/cors-bundle": "*"
+    },
     "autoload": {
         "psr-4": {
             "Hanaboso\\RestBundle\\": "src"
@@ -12,23 +33,6 @@
         "psr-4": {
             "Hanaboso\\RestBundleTests\\": "tests"
         }
-    },
-    "require": {
-        "php": "^8.4",
-        "ext-ctype": "*",
-        "ext-intl": "*",
-        "ext-mbstring": "*",
-        "hanaboso/utils": "^2.0",
-        "symfony/dependency-injection": "^8.0",
-        "symfony/serializer": "^8.0"
-    },
-    "require-dev": {
-        "hanaboso/php-check-utils": "^2.0",
-        "symfony/yaml": "^8.0"
-    },
-    "conflict": {
-        "friendsofsymfony/rest-bundle": "*",
-        "nelmio/cors-bundle": "*"
     },
     "config": {
         "allow-plugins": {
