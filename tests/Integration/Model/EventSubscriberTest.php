@@ -13,7 +13,6 @@ use Hanaboso\RestBundle\Model\EventSubscriber;
 use Hanaboso\RestBundleTests\KernelTestCaseAbstract;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -215,12 +214,12 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
      */
     private function prepareRequestEvent(): RequestEvent
     {
-        $request = self::createMock(Request::class);
-        $request->method('getMethod')->willReturn('OPTIONS');
-        $request->method('getContent')->willReturn('{"one":"One"}');
-        $request->method('getRequestUri')->willReturn('/api/example');
-
-        $this->setProperty($request, 'headers', new HeaderBag(['Origin' => 'https://example.com']));
+        $request = Request::create(
+            '/api/example',
+            'OPTIONS',
+            server: ['HTTP_ORIGIN' => 'https://example.com'],
+            content: '{"one":"One"}',
+        );
 
         $requestEvent = self::createPartialMock(RequestEvent::class, ['getRequest']);
         $requestEvent->method('getRequest')->willReturn($request);
@@ -234,9 +233,7 @@ final class EventSubscriberTest extends KernelTestCaseAbstract
      */
     private function prepareResponseEvent(): ResponseEvent
     {
-        $request = self::createMock(Request::class);
-        $request->method('getRequestUri')->willReturn('/api/example');
-        $this->setProperty($request, 'headers', new HeaderBag(['Origin' => 'https://example.com']));
+        $request = Request::create('/api/example', server: ['HTTP_ORIGIN' => 'https://example.com']);
 
         $requestEvent = self::createPartialMock(ResponseEvent::class, ['getRequest', 'getResponse']);
         $requestEvent->method('getRequest')->willReturn($request);

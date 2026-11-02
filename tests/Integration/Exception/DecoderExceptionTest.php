@@ -20,7 +20,7 @@ final class DecoderExceptionTest extends KernelTestCaseAbstract
      */
     public function testGetExceptions(): void
     {
-        self::assertEmpty((new DecoderException('', 0))->getExceptions());
+        self::assertSame([], (new DecoderException('', 0))->getExceptions());
     }
 
 }

@@ -12,7 +12,7 @@ use Throwable;
  *
  * @package Hanaboso\RestBundle\Model\Decoder
  */
-final class XmlDecoder implements DecoderInterface
+final readonly class XmlDecoder implements DecoderInterface
 {
 
     /**
@@ -20,7 +20,7 @@ final class XmlDecoder implements DecoderInterface
      *
      * @param XmlEncoder $encoder
      */
-    public function __construct(private readonly XmlEncoder $encoder)
+    public function __construct(private XmlEncoder $encoder)
     {
     }
 
